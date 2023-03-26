@@ -26,7 +26,7 @@ namespace BTC_OrderBook.Application.Services
 
             var entity = _mapper.Map<OrderBookEntity>(orderBookClientModel);
 
-            //await _orderBookRepository.AddAsync(entity, cancellationToken);
+            await _orderBookRepository.AddAsync(entity, cancellationToken);
 
             return orderBookClientModel;
         }

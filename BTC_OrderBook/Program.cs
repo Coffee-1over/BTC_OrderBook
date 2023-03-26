@@ -17,6 +17,7 @@ using BTC_OrderBook.Application.Services;
 using BTC_OrderBook.Domain.Interfaces.Repositories;
 using BTC_OrderBook.Infrastructure.Repositories;
 using BTC_OrderBook.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,8 +40,12 @@ builder.Services.AddInjections();
 builder.Services.AddMapper();
 builder.AddHttpContexts();
 
-
-
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .WriteTo.Console()
+    .Enrich.FromLogContext()
+    .Enrich.WithMachineName()
+    .CreateLogger();
 
 
 builder.Services.AddCors();
