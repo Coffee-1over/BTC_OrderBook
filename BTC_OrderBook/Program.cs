@@ -21,6 +21,11 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.ConfigureLogging(opt =>
+{
+    opt.AddConsole();
+});
+
 builder.Services.AddControllers()
      .AddJsonOptions(options =>
      {
@@ -39,13 +44,6 @@ builder.Services.AddInjections();
 
 builder.Services.AddMapper();
 builder.AddHttpContexts();
-
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .WriteTo.Console()
-    .Enrich.FromLogContext()
-    .Enrich.WithMachineName()
-    .CreateLogger();
 
 
 builder.Services.AddCors();
