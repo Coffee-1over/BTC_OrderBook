@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BTC_OrderBook.Application.Dtos.Out.OrderBook;
+using BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook.AdditionalInfo;
 using BTC_OrderBook.Domain.Entities;
 using BTC_OrderBook.Domain.Extensions;
 using BTC_OrderBook.Domain.Models.Clients.OrderBook;
@@ -10,9 +11,10 @@ namespace BTC_OrderBook.Application.Profiles
     {
         public OrderBookProfile()
         {
-            MapEntitiesAndDtos();
+            MapModelsAndDtos();
             MapModelsAndEntities();
         }
+
 
         private void MapModelsAndEntities()
         {
@@ -31,14 +33,15 @@ namespace BTC_OrderBook.Application.Profiles
                  })))
                  .ForAllMembersIgnore(new[]
                  {
-                     nameof(OrderBookEntity.Id)
+                     nameof(OrderBookEntity.Id),
+                     nameof(OrderBookEntity.CurreciesPair)
                  });
         }
 
-        private void MapEntitiesAndDtos()
+        private void MapModelsAndDtos()
         {
-            CreateMap<TradeOrderEntity, TradeOrderOutDto>();
-            CreateMap<OrderBookEntity, OrderBookOutDto>();
+            CreateMap<OrderBookClientModel, OrderBookOutDto>();
+            CreateMap<BitstampCurrenciesPairsConfig, OrderBookCurrenciesPairsOutDto>();
         }
     }
 }
