@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BTC_OrderBook.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace BTC_OrderBook.Domain.Entities
@@ -11,6 +12,9 @@ namespace BTC_OrderBook.Domain.Entities
 
         [Column("TIMESTAMP")]
         public long Timestamp { get; set; }
+
+        [Column("CURRENCIES_PAIR")]
+        public OrderBookCurreciesPair CurreciesPair { get; set; }
 
         public IList<TradeOrderEntity> Asks { get; set; }
         public IList<TradeOrderEntity> Bids { get; set; }
