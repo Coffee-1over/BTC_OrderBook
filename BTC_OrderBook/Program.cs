@@ -18,6 +18,7 @@ using BTC_OrderBook.Domain.Interfaces.Repositories;
 using BTC_OrderBook.Infrastructure.Repositories;
 using BTC_OrderBook.Extensions;
 using Serilog;
+using BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook.AdditionalInfo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.AddDb();
 
 builder.Services.Configure<BitstampConfig>(builder.Configuration.GetSection("Bitstamp"));
+builder.Services.Configure<BitstampOrderBookAdditionalInfoConfig>(builder.Configuration.GetSection("Bitstamp:OrderBook:AdditionalInfo"));
 
 builder.Services.AddInjections();
 

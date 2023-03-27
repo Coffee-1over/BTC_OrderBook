@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using BTC_OrderBook.Domain.Configs.Bitstamp;
+using BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook;
 using BTC_OrderBook.Domain.Exceptions;
 using BTC_OrderBook.Domain.Models.Clients.OrderBook;
 using BTC_OrderBook.Infrastructure.Clients.OrderBook;
