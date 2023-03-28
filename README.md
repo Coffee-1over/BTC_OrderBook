@@ -9,6 +9,7 @@ Visual Studio way
 2. Open BTC_OrderBook/BTC_OrderBook.sln in Visual Studio
 3. Change DB connection string(if it needs) in BTC_OrderBook/BTC_OrderBook/appsettings.json
 4. Run BTC_OrderBook project
+5. Base ApiUrl http://localhost:5172/ 
 
 
 ### Console way
