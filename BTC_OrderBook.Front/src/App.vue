@@ -3,7 +3,7 @@
     <highcharts :options="chartOptions" class="chart" />
 
     <div>
-      <v-select v-model="selectedCurrencyPair" :options="currenciesPairs">
+      <v-select class="select_currencies" v-model="selectedCurrencyPair" :options="currenciesPairs">
         <template #selected-option="option">
           <div>
             <span>{{ option.view }}</span>
@@ -33,24 +33,37 @@ export default defineComponent({
     const currenciesPairs = ref([])
     const staticText = ' Market Depth'
 
-    const chartOptions = ref({
+    const chartTemplate = {
       chart: {
         type: 'area',
         zoomType: 'xy'
       },
       title: {
-        text: `BTC-EUR Market Depth`
+        text: 'BTC-EUR Market Depth'
       },
       xAxis: {
+        min: null,
+        max: null,
         minPadding: 0,
         maxPadding: 0,
-        max: 700000,
+        plotLines: [
+          {
+            color: '#888',
+            value: 0.1523,
+            width: 1,
+            label: {
+              text: 'Actual price',
+              rotation: 90
+            }
+          }
+        ],
         title: {
           text: 'Price'
         }
       },
       yAxis: [
         {
+          max: 100,
           lineWidth: 1,
           gridLineWidth: 1,
           title: null,
@@ -60,8 +73,7 @@ export default defineComponent({
           labels: {
             align: 'left',
             x: 8
-          },
-          max: 150
+          }
         },
         {
           opposite: true,
@@ -81,7 +93,13 @@ export default defineComponent({
       legend: {
         enabled: false
       },
-
+      plotOptions: {
+        area: {
+          fillOpacity: 0.2,
+          lineWidth: 1,
+          step: 'center'
+        }
+      },
       tooltip: {
         headerFormat: '<span style="font-size=10px;">Price: {point.key}</span><br/>',
         valueDecimals: 2
@@ -95,24 +113,40 @@ export default defineComponent({
         {
           name: 'Bids',
           data: [],
-          color: '#7CFC00'
+
+          color: '#03a7a8'
         }
       ]
-    })
+    }
+    function findActualPrice(bids, asks) {
+      const maxBidPrice = bids[bids.length - 1][0]
+      const minAskPrice = asks[0][0]
+      const actualPrice = (maxBidPrice + minAskPrice) / 2
+      return actualPrice
+    }
+    const chartOptions = ref({})
     onMounted(async () => {
       currenciesPairs.value = await getOrderBookCurreciesPairsAsync()
       selectedCurrencyPair.value = currenciesPairs.value[0]
 
-      await drawChartAsync()
       setInterval(drawChartAsync, 5000)
     })
 
     async function drawChartAsync() {
       if (selectedCurrencyPair.value.value) {
         const response = await getOrderBookAsync(selectedCurrencyPair.value.value)
+        chartOptions.value = chartTemplate
         chartOptions.value.title.text = selectedCurrencyPair.value.view + staticText
-        chartOptions.value.series[1].data = response.bids
-        chartOptions.value.series[0].data = response.asks
+
+        let bids = response.bids.reverse()
+
+        let asks = response.asks
+
+        chartOptions.value.series[1].data = bids
+        chartOptions.value.series[0].data = asks
+        const actualPrice = findActualPrice(bids, asks)
+        chartOptions.value.xAxis.plotLines[0].value = actualPrice
+        chartOptions.value.xAxis.max = actualPrice * 2
       }
     }
 
@@ -134,5 +168,8 @@ export default defineComponent({
   max-width: 2000px;
   width: 100%;
   height: 700px;
+}
+.select_currencies {
+  margin-top: -100px;
 }
 </style>
