@@ -2,9 +2,20 @@
 
 namespace BTC_OrderBook.Application.Dtos.Out.OrderBook
 {
-    public class OrderBookCurrenciesPairsOutDto
+
+    /// <summary>
+    /// Order book currency pair out dto
+    /// </summary>
+    public class OrderBookCurrencyPairOutDto
     {
-        public string View { get; set; }
+        /// <summary>
+        /// View variant of pair
+        /// </summary>
+        public string View { get; set; } = null!;
+
+        /// <summary>
+        /// Enum value
+        /// </summary>
         public OrderBookCurreciesPair Value { get; set; }
     }
 }

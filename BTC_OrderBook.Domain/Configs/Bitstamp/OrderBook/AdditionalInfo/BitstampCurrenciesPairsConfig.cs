@@ -7,9 +7,19 @@ using System.Threading.Tasks;
 
 namespace BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook.AdditionalInfo
 {
-    public class BitstampCurrenciesPairsConfig
+    /// <summary>
+    /// Bitstamp currency pair config
+    /// </summary>
+    public class BitstampCurrencyPairConfig
     {
-        public string View { get; set; }
+        /// <summary>
+        /// View variant of pair
+        /// </summary>
+        public string View { get; set; } = null!;
+
+        /// <summary>
+        /// Enum value
+        /// </summary>
         public OrderBookCurreciesPair Value { get; set; }
     }
 }

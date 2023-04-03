@@ -29,8 +29,10 @@ namespace BTC_OrderBook.Infrastructure.Providers
 
         public ErrorOutDto GenerateErrorOutDto(Exception ex, IList<string>? auxiliaryData = null)
         {
-            string logErrorMsg = string.Format("{0}: {1}", ex.GetType(), ex.Message);
-            _logger.LogError(logErrorMsg);
+            var exceptionType = ex.GetType();
+            var providerName = nameof(ExceptionProvider);
+
+            _logger.LogError("{ProviderName} {ExceptionType}: {Message}", providerName, exceptionType, ex.Message);
 
             string? message = null;
 

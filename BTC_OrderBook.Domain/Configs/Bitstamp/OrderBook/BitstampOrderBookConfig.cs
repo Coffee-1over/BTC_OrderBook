@@ -7,9 +7,19 @@ using BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook.AdditionalInfo;
 
 namespace BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook
 {
+    /// <summary>
+    /// Bitstamp order book config
+    /// </summary>
     public class BitstampOrderBookConfig
     {
-        public string Link { get; set; }
-        public BitstampOrderBookAdditionalInfoConfig AdditionalInfo { get; set; }
+        /// <summary>
+        /// Link
+        /// </summary>
+        public string Link { get; set; } = null!;
+
+        /// <summary>
+        /// Bitstamp order book additional info
+        /// </summary>
+        public BitstampOrderBookAdditionalInfoConfig AdditionalInfo { get; set; } = null!;
     }
 }

@@ -40,7 +40,7 @@ namespace BTC_OrderBook.Application.Services
         }
 
         /// <inheritdoc />
-        public IList<BitstampCurrenciesPairsConfig> CurrenciesPairs => _bitstampOrderBookAdditionalInfoConfig.CurrenciesPairs;
+        public IList<BitstampCurrencyPairConfig> CurrenciesPairs => _bitstampOrderBookAdditionalInfoConfig.CurrenciesPairs;
 
 
         /// <inheritdoc />

@@ -20,6 +20,6 @@ namespace BTC_OrderBook.Domain.Services.Abstract
         /// <summary>
         /// List of order book currencies pairs
         /// </summary>
-        IList<BitstampCurrenciesPairsConfig> CurrenciesPairs { get; }
+        IList<BitstampCurrencyPairConfig> CurrenciesPairs { get; }
     }
 }

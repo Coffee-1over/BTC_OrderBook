@@ -46,7 +46,7 @@ namespace BTC_OrderBook.Application.Profiles
         private void MapModelsAndDtos()
         {
             CreateMap<OrderBookClientModel, OrderBookOutDto>();
-            CreateMap<BitstampCurrenciesPairsConfig, OrderBookCurrenciesPairsOutDto>();
+            CreateMap<BitstampCurrencyPairConfig, OrderBookCurrencyPairOutDto>();
         }
 
         /// <summary>

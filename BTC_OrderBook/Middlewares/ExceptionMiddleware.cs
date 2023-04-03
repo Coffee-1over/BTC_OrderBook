@@ -13,18 +13,13 @@ namespace BTC_OrderBook.Middlewares
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionMiddleware> _logger;
 
         /// <summary>
         /// Request error handler constructor
         /// </summary>
-        /// <param name="logger">Logger</param>
         /// <param name="next">Next handler</param>
-        public ExceptionMiddleware(
-            ILogger<ExceptionMiddleware> logger,
-            RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next)
         {
-            _logger = logger;
             _next = next;
         }
 

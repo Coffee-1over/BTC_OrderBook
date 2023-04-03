@@ -36,8 +36,8 @@ namespace BTC_OrderBook.Controller
         [HttpGet("currecies-pairs")]
         public IActionResult GetCurrenciesPairs()
         {
-            var outDto = _mapper.Map<IList<OrderBookCurrenciesPairsOutDto>>(_orderBookService.CurrenciesPairs);
-            return Ok(new BaseOut<IList<OrderBookCurrenciesPairsOutDto>>(outDto));
+            var outDto = _mapper.Map<IList<OrderBookCurrencyPairOutDto>>(_orderBookService.CurrenciesPairs);
+            return Ok(new BaseOut<IList<OrderBookCurrencyPairOutDto>>(outDto));
         }
 
         /// <summary>
