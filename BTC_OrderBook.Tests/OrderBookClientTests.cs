@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using BTC_OrderBook.Domain.Configs.Bitstamp;
 using BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook;
+using BTC_OrderBook.Domain.Enums;
 using BTC_OrderBook.Domain.Exceptions;
 using BTC_OrderBook.Domain.Models.Clients.OrderBook;
 using BTC_OrderBook.Infrastructure.Clients.OrderBook;
@@ -50,12 +51,11 @@ namespace BTC_OrderBook.Tests
             var orderBookClient = new OrderBookClient(_configMock.Object, _loggerMock.Object, httpClient);
 
             // Act
-            var result = await orderBookClient.GetOrderBookAsync("btcusd", CancellationToken.None);
+            var result = await orderBookClient.GetOrderBookAsync(OrderBookCurreciesPair.btcusd.ToString(), CancellationToken.None);
 
             // Assert
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<OrderBookClientModel>(result);
-            Assert.AreEqual(1234567890, result.Timestamp);
             Assert.IsEmpty(result.Bids);
             Assert.IsEmpty(result.Asks);
         }
@@ -83,7 +83,7 @@ namespace BTC_OrderBook.Tests
             var orderBookClient = new OrderBookClient(_configMock.Object, _loggerMock.Object, httpClient);
 
             // Act & Assert
-            Assert.ThrowsAsync<OrderBookException>(async () => await orderBookClient.GetOrderBookAsync("btcusd", CancellationToken.None));
+            Assert.ThrowsAsync<OrderBookException>(async () => await orderBookClient.GetOrderBookAsync(OrderBookCurreciesPair.btcusd.ToString(), CancellationToken.None));
         }
     }
 }

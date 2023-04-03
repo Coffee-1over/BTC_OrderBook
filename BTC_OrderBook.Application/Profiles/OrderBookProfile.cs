@@ -7,30 +7,32 @@ using BTC_OrderBook.Domain.Models.Clients.OrderBook;
 
 namespace BTC_OrderBook.Application.Profiles
 {
+    /// <summary>
+    /// Order book automapper profile
+    /// </summary>
     public class OrderBookProfile : Profile
     {
+        /// <summary>
+        /// Order book automapper profile constructor
+        /// </summary>
         public OrderBookProfile()
         {
             MapModelsAndDtos();
             MapModelsAndEntities();
         }
 
-
+        /// <summary>
+        /// Mapp models to enteties
+        /// </summary>
         private void MapModelsAndEntities()
         {
             CreateMap<OrderBookClientModel, OrderBookEntity>()
-                 .ForMember(entity => entity.Asks, opt => opt.MapFrom(model => model.Asks.Select(x => new TradeOrderEntity
+                 .ForMember(entity => entity.TradeOrders, opt => opt.MapFrom(model => new List<TradeOrderEntity>())) 
+                 .AfterMap((clientModel, entity) =>
                  {
-                     Amount = x[0],
-                     Price = x[1],
-                     IsBuy = false,
-                 })))
-                 .ForMember(entity => entity.Bids, opt => opt.MapFrom(model => model.Bids.Select(x => new TradeOrderEntity
-                 {
-                     Amount = x[0],
-                     Price = x[1],
-                     IsBuy = true,
-                 })))
+                     AddExternalClientOrdersToEntity(entity.TradeOrders, clientModel.Asks, false);
+                     AddExternalClientOrdersToEntity(entity.TradeOrders, clientModel.Bids, true);
+                 })
                  .ForAllMembersIgnore(new[]
                  {
                      nameof(OrderBookEntity.Id),
@@ -38,10 +40,27 @@ namespace BTC_OrderBook.Application.Profiles
                  });
         }
 
+        /// <summary>
+        /// Mapp models to dtos
+        /// </summary>
         private void MapModelsAndDtos()
         {
             CreateMap<OrderBookClientModel, OrderBookOutDto>();
             CreateMap<BitstampCurrenciesPairsConfig, OrderBookCurrenciesPairsOutDto>();
         }
+
+        /// <summary>
+        /// Add from external client orders to entity list
+        /// </summary>
+        /// <param name="tradeOrderEntities">Entity list</param>
+        /// <param name="externalClientModels">External client orders</param>
+        /// <param name="isBuy">Is orders buy</param>
+        private void AddExternalClientOrdersToEntity(IList<TradeOrderEntity> tradeOrderEntities, IList<IList<decimal>> externalClientModels, bool isBuy)
+            => externalClientModels.ForEach(x => tradeOrderEntities.Add(new TradeOrderEntity
+            {
+                Amount = x[0],
+                Price = x[1],
+                IsBuy = isBuy,
+            }));
     }
 }

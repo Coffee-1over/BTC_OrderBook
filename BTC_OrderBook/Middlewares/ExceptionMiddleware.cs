@@ -1,5 +1,4 @@
-﻿
-using BTC_OrderBook.Application.Dto.Out.Abstract;
+﻿using BTC_OrderBook.Application.Dto.Out.Abstract;
 using BTC_OrderBook.Domain.Exceptions;
 using BTC_OrderBook.Infrastructure.Providers;
 using System.Net;

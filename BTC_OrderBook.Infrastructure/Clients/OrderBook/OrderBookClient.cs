@@ -21,14 +21,24 @@ namespace BTC_OrderBook.Infrastructure.Clients.OrderBook
             _httpClient = httpClient;
         }
 
-        public async Task<OrderBookClientModel> GetOrderBookAsync(string currenciesPair, CancellationToken cancellationToken)
+        
+        /// <inheritdoc />
+        public async Task<OrderBookClientModel?> GetOrderBookAsync(string currenciesPair, CancellationToken cancellationToken)
         {
             var url = string.Format(_config.OrderBook.Link, currenciesPair);
 
             var result = await MakeGetRequestAsync(url, cancellationToken);
 
-            return await result.Content.ReadFromJsonAsync<OrderBookClientModel>(JsonConstants.JsonSerializerOptions, cancellationToken);
+            return await result.Content.ReadFromJsonAsync<OrderBookClientModel?>(JsonConstants.JsonSerializerOptions, cancellationToken);
         }
+
+        /// <summary>
+        /// Make get request async
+        /// </summary>
+        /// <param name="url">Url</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="OrderBookException"></exception>
         private async Task<HttpResponseMessage> MakeGetRequestAsync(string url, CancellationToken cancellationToken)
         {
             var response = await _httpClient.GetAsync(url, cancellationToken);
@@ -40,9 +50,8 @@ namespace BTC_OrderBook.Infrastructure.Clients.OrderBook
 
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             _logger.LogError(content);
-            throw new OrderBookException("SomethingWrong");
+            throw new OrderBookException("Something Wrong");
         }
-
 
     }
 

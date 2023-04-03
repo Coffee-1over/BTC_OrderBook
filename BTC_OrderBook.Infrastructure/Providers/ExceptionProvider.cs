@@ -29,7 +29,7 @@ namespace BTC_OrderBook.Infrastructure.Providers
 
         public ErrorOutDto GenerateErrorOutDto(Exception ex, IList<string>? auxiliaryData = null)
         {
-            string logErrorMsg = $"{ex.GetType()}: {ex} \n\n {ex.Message}";
+            string logErrorMsg = string.Format("{0}: {1}", ex.GetType(), ex.Message);
             _logger.LogError(logErrorMsg);
 
             string? message = null;

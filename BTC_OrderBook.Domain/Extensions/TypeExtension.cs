@@ -24,16 +24,5 @@
 
             return null;
         }
-
-        /// <summary>
-        /// Get type string representation
-        /// </summary>
-        /// <param name="objType">Type</param>
-        /// <param name="obj">Object</param>
-        /// <returns>String representation</returns>
-        public static string ToStringRepresentation(this Type objType, object obj) =>
-            string.Join(
-                ", ",
-                objType.GetProperties().Select(p => $"{p.Name}: {p.GetValue(obj)}"));
     }
 }

@@ -11,8 +11,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BTC_OrderBook.Extensions
 {
+    /// <summary>
+    /// Dependency container of extensions methods
+    /// </summary>
     public static class DependencyContainer
     {
+        /// <summary>
+        /// Add services in service collection
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddInjections(this IServiceCollection services)
         {
 
@@ -25,6 +32,10 @@ namespace BTC_OrderBook.Extensions
             
         }
 
+        /// <summary>
+        /// Add http context
+        /// </summary>
+        /// <param name="builder">Web application builder</param>
         public static void AddHttpContexts(this WebApplicationBuilder builder)
         {
             builder.Services.AddHttpClient<IOrderBookClient, OrderBookClient>(client =>
@@ -33,6 +44,10 @@ namespace BTC_OrderBook.Extensions
             });
         }
 
+        /// <summary>
+        /// Add db context to app
+        /// </summary>
+        /// <param name="builder">Web application builder</param>
         public static void AddDb(this WebApplicationBuilder builder)
         {
 
@@ -41,6 +56,10 @@ namespace BTC_OrderBook.Extensions
 
         }
 
+        /// <summary>
+        /// Add automapper to app
+        /// </summary>
+        /// <param name="services">App service collection</param>
         public static void AddMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(cfg =>

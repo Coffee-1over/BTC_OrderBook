@@ -1,23 +1,10 @@
-using Bitstamp.Client.Websocket;
-using Bitstamp.Client.Websocket.Communicator;
-using BTC_OrderBook.Application.Profiles;
-using BTC_OrderBook.Infrastructure.Clients;
-using BTC_OrderBook.Infrastructure.Providers;
 using BTC_OrderBook.Middlewares;
 using BTC_OrderBook.Domain.Configs.Bitstamp;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BTC_OrderBook.Infrastructure.Clients.OrderBook;
-using BTC_OrderBook.Domain.Abstracts.Clients;
 using BTC_OrderBook.Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
-using BTC_OrderBook.Domain.Services.Abstract;
-using Bitstamp.Client.Websocket.Responses.Books;
-using BTC_OrderBook.Application.Services;
-using BTC_OrderBook.Domain.Interfaces.Repositories;
-using BTC_OrderBook.Infrastructure.Repositories;
 using BTC_OrderBook.Extensions;
-using Serilog;
 using BTC_OrderBook.Domain.Configs.Bitstamp.OrderBook.AdditionalInfo;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,8 +22,6 @@ builder.Services.AddControllers()
          options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
      });
 
-builder.Services.AddEndpointsApiExplorer();
-
 builder.AddDb();
 
 builder.Services.Configure<BitstampConfig>(builder.Configuration.GetSection("Bitstamp"));
@@ -47,9 +32,7 @@ builder.Services.AddInjections();
 builder.Services.AddMapper();
 builder.AddHttpContexts();
 
-
 builder.Services.AddCors();
-builder.Services.AddSignalR();
 
 builder.Services.AddHttpContextAccessor();
 
@@ -76,12 +59,8 @@ app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowCredentials());
 
-
-app.UseAuthentication();
 app.UseRouting();
-app.UseAuthorization();
 
 app.MapControllers();
-
 
 app.Run();
